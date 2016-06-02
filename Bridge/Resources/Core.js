@@ -484,12 +484,10 @@
 	                var item = from[i];
 
 	                if (!Bridge.isArray(item)) {
-	                    if (elemFactory !== null) {
-	                        item = Bridge.merge(elemFactory(), item);
-	                    }
+	                    item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
 	                }
 
-	                fn.apply(to, [item]);
+	                fn.apply(to, item);
 	            }
 	        } else {
 	            for (key in from) {

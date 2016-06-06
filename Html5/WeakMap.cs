@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Bridge.Html5
+﻿namespace Bridge.Html5
 {
     /// <summary>
     /// HTML5 WeakMap. Keys must be object (primitives are not allowed). Values can be any type (inc. primitives)

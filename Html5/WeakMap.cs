@@ -1,7 +1,7 @@
 ﻿namespace Bridge.Html5
 {
     /// <summary>
-    /// HTML5 WeakMap. Keys must be object (primitives are not allowed). Values can be any type (inc. primitives)
+    /// HTML5 WeakMap. Keys must be object (primitives and string are not allowed). Values can be any type (inc. primitives)
     /// <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">MDN</a>
     /// </summary>
     [External]
@@ -26,24 +26,21 @@
         /// <summary>
         /// gets contained element OR returns null. 
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public virtual extern object Get<T>(T key) where T : class;
 
         /// <summary>
         /// Sets value. Neither key nor value can be null
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
         public virtual extern void Set<T>(T key, object value) where T : class;
 
         /// <summary>
-        /// deletes element. Returns true if element was contained in the map. Returns false when it wasn't present in the map
+        /// Deletes element. Returns true if element was contained in the map. Returns false when it wasn't
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         public virtual extern bool Delete<T>(T key) where T : class;
 
+        /// <summary>
+        /// Checks whether element with given key is present in map.
+        /// </summary>
         public virtual extern bool Has<T>(T key)  where T : class;
     }
 }

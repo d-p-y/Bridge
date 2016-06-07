@@ -11,17 +11,13 @@
         /// <summary>
         ///  Default constructor
         /// </summary>
-        public WeakMap()
-        {
-        }
-
+        public extern WeakMap();
+        
         /// <summary>
         ///  Initialize WeakMap using items that are expected to be an array of the two-element-arrays. Each two-element-array is key and value respecively
         /// Beware that it is not widely implemented (2016-05)
         /// </summary>
-        public WeakMap(object[][] items)
-        {
-        }
+        public extern WeakMap(object[][] items);
 
         /// <summary>
         /// gets contained element OR returns null. 

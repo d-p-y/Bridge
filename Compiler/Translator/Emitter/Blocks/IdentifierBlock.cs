@@ -96,6 +96,7 @@ namespace Bridge.Translator
 
             if (hasThis)
             {
+                Emitter.ThisRefCounter++;
                 this.Write("");
                 var oldBuilder = this.Emitter.Output;
                 this.Emitter.Output = new StringBuilder();

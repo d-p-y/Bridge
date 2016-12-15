@@ -7166,8 +7166,6 @@ Bridge.$N1391Result =                 r;
                                 done = Bridge.Test.Assert.async();
 
                                     foo = null; /// Async method lacks 'await' operators and will run synchronously
-
-
                                     bar = Bridge.fn.bind(this, function () {
                                         var $step = 0,
                                             $jumpFromFinally, 
@@ -7197,7 +7195,7 @@ Bridge.$N1391Result =                 r;
 
                                         $asyncBody();
                                         return $tcs.task;
-                                    });
+                                    }); /// Async method lacks 'await' operators and will run synchronously
                                     $task1 = bar();
                                     $step = 1;
                                     $task1.continueWith($asyncBody, true);
@@ -12488,6 +12486,85 @@ Bridge.$N1391Result =                 r;
             this.setTestObjectProperty(String.fromCharCode.apply(null, [99]));
         }
     });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174", {
+        statics: {
+            testGenericComparerDefault: function () {
+                //comparer Default "as such" works
+                {
+                    var cmp = new (System.Collections.Generic.Comparer$1(String))(System.Collections.Generic.Comparer$1.$default.fn);
+                    Bridge.Test.Assert.true$1(cmp.compare("a", "b") < 0, "[1]is less than zero as expected?");
+                }
+
+                //comparer Create "as such" works
+                {
+                    var cmp1 = new (System.Collections.Generic.Comparer$1(String))($asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.f1);
+                    Bridge.Test.Assert.true$1(cmp1.compare("a", "b") < 0, "[2]is less than zero as expected?");
+                }
+
+                //custom comparer "as such" works
+                {
+                    var cmp2 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.CustomCmp$1(String))();
+                    Bridge.Test.Assert.true$1(cmp2.compare("a", "b") < 0, "[3]is less than zero as expected?");
+                }
+
+                //custom comparer wrapped works
+                {
+                    var cmp3 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.WrappingCmp$1(String))(new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.CustomCmp$1(String))());
+                    Bridge.Test.Assert.true$1(cmp3.compare("a", "b") < 0, "[4]is less than zero as expected?");
+                }
+
+                //default comparer wrapped doesn't work
+                {
+                    var cmp4 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.WrappingCmp$1(String))(new (System.Collections.Generic.Comparer$1(String))(System.Collections.Generic.Comparer$1.$default.fn));
+                    Bridge.Test.Assert.true$1(cmp4.compare("a", "b") < 0, "[5]is less than zero as expected?");
+                }
+
+                //created comparer wrapped doesn't work
+                {
+                    var cmp5 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.WrappingCmp$1(String))(new (System.Collections.Generic.Comparer$1(String))($asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.f1));
+                    Bridge.Test.Assert.true$1(cmp5.compare("a", "b") < 0, "[6]is less than zero as expected?");
+                }
+            }
+        }
+    });
+
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174", $asm.$);
+
+    Bridge.apply($asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174, {
+        f1: function (x, y) {
+            return System.String.compare(x, y);
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.CustomCmp$1", function (T) { return {
+        inherits: [System.Collections.Generic.IComparer$1(T)],
+        config: {
+            alias: [
+            "compare", "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"
+            ]
+        },
+        compare: function (x, y) {
+            return Bridge.compare(x, y, false, T);
+        }
+    }; });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2174.WrappingCmp$1", function (T) { return {
+        inherits: [System.Collections.Generic.IComparer$1(T)],
+        _wrapped: null,
+        config: {
+            alias: [
+            "compare", "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"
+            ]
+        },
+        ctor: function (wrapped) {
+            this.$initialize();
+            this._wrapped = wrapped;
+        },
+        compare: function (x, y) {
+            return this._wrapped["System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"](x, y);
+        }
+    }; });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {

@@ -2,7 +2,7 @@
  * @version   : 15.6.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @date      : 2016-12-12
- * @copyright : Copyright 2008-2016 Object.NET, Inc. http://object.net/
+ * @copyright : Copyright 2008-2017 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
  */
 
@@ -3144,10 +3144,14 @@
                 return obj.$$name;
             }
 
-            if ((obj).constructor === Function) {
-                str = (obj).toString();
+            if (obj.constructor === Object) {
+                str = obj.toString();
+                var match = (/\[object (.{1,})\]/).exec(str);
+                return (match && match.length > 1) ? match[1] : "Object";
+            } else if (obj.constructor === Function) {
+                str = obj.toString();
             } else {
-                str = (obj).constructor.toString();
+                str = obj.constructor.toString();
             }
 
             var results = (/function (.{1,})\(/).exec(str);
